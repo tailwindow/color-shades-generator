@@ -143,6 +143,10 @@ export default {
     })
   },
   methods: {
+    isHex (h) {
+      var a = parseInt(h, 16)
+      return (a.toString(16) === h.toLowerCase())
+    },
     toggleView () {
       this.isHexVisible = !this.isHexVisible
     },
@@ -161,7 +165,7 @@ export default {
     },
     updateHexColor (e, index) {
       const color = e.replace('#', '')
-      if (color.length === 6) {
+      if (color.length === 6 && this.isHex(color)) {
         this.colors[index].warning = false
         this.createTintsAndShades(color, index)
       } else {
@@ -170,7 +174,7 @@ export default {
     },
     updateColor (e, index) {
       const color = e.target.value.replace('#', '')
-      if (color.length === 6) {
+      if (color.length === 6 && this.isHex(color)) {
         this.colors[index].warning = false
         this.createTintsAndShades(color, index)
       } else {

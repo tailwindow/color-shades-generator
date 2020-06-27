@@ -35,11 +35,11 @@
           </div>
           <div class="flex flex-col mr-4 text-center">
             <label for="regular" class="text-xs leading-4 text-gray-700 font-bold uppercase">Color Interval</label> <span class="text-xs font-hairline">( {{ colorIntervalMin }} - {{ colorIntervalMax }} )</span>
-            <input id="regular" v-model="colorInterval" type="number" class="shadow w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input percentage color interval">
+            <input id="regular" ref="selectInterval" v-model="colorInterval" type="number" class="shadow select-all w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input color interval" @click="$refs.selectInterval.select()">
           </div>
           <div class="flex flex-col text-center">
             <label for="regular" class="text-xs leading-4 text-gray-700 font-bold uppercase">Color Range</label> <span class="text-xs font-hairline">( 2 - 9 )</span>
-            <input id="regular" v-model="colorRange" type="number" class="shadow w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input percentage color interval">
+            <input id="regular" ref="selectRange" v-model="colorRange" type="number" class="shadow select-all w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input color range" @click="$refs.selectRange.select()">
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@ export default {
       if (this.colorRange < 2) {
         this.colorRange = 2
       }
-      this.colorIntervalMax = 18 - ((this.colorRange - 4) * 2)
+      this.colorIntervalMax = 20 - ((this.colorRange - 4) * 2)
       this.colorInterval = this.colorIntervalMax
       this.colors.forEach((color, index) => {
         this.createTintsAndShades(color.hex, index)

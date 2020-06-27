@@ -45,7 +45,7 @@
       </div>
       <hr class="border-gray-400 mx-4 my-4">
       <div class="flex w-full sm:flex-row flex-wrap justify-center">
-        <div v-for="(color, index) in colors" :key="'color-' + color + '-' + index" class="px-4 w-1/2 sm:w-1/3 md:w-1/5 relative">
+        <div v-for="(color, index) in colors" :key="'color-' + color + '-' + index + random()" class="px-4 w-1/2 sm:w-1/3 md:w-1/5 relative">
           <div v-if="color.warning === true" class="text-xs text-red-600 text-right absolute right-0 mr-4 -mt-4">
             Fill 6 Hex Color
           </div>
@@ -60,13 +60,13 @@
               class="shadow-md bg-gray-200 w-full text-sm p-2 outline-none"
               name="color"
               placeholder="HEX COLOR"
-              @keyup="updateColor($event, index)"
+              @change="updateColor($event, index)"
             >
           </div>
           <div class="flex flex-col mb-8">
             <div
               v-for="shade in colorShades[index]"
-              :key="'shade-' + shade + '-' + index"
+              :key="'shade-' + shade + '-' + index + random()"
               class="shadow-md focus:outline-none"
               :class="{ 'text-white' : !isLumaLight(shade) }"
               :style="{ backgroundColor: '#' + shade }"
@@ -102,9 +102,9 @@ export default {
         { hex: 'FFEB3B', warning: false },
         { hex: 'F44336', warning: false }
       ],
-      colorRange: 4, // (2 - 9)
+      colorRange: 4, // (0 - 9)
       colorInterval: 18,
-      colorIntervalMin: 10,
+      colorIntervalMin: 0,
       colorIntervalMax: 30,
       interval: 0.18,
       colorShades: []
@@ -127,8 +127,8 @@ export default {
       if (this.colorRange > 9) {
         this.colorRange = 9
       }
-      if (this.colorRange < 2) {
-        this.colorRange = 2
+      if (this.colorRange < 0) {
+        this.colorRange = 0
       }
       this.colorIntervalMax = 20 - ((this.colorRange - 4) * 2)
       this.colorInterval = this.colorIntervalMax
@@ -143,6 +143,10 @@ export default {
     })
   },
   methods: {
+    random () {
+      // Fixed vue duplicate key when choose same color
+      return Math.random(100000)
+    },
     isHex (h) {
       return /[0-9A-F]{6}$/i.test(h)
     },

@@ -24,7 +24,15 @@
             Color shades generator
           </p>
         </div>
-        <div class="mt-8 sm:mt-0 flex">
+        <div class="flex mt-8 sm:mt-0">
+          <div class="flex items-end mr-4 text-center">
+            <a class="bg-gray-300 shadow-md rounded-full w-10 h-10 mr-4 p-2 flex items-center" href="javascript:void(0)">
+              <svg class="fill-current flex-1 text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z" /></svg>
+            </a>
+            <a class="bg-gray-300 shadow-md rounded-full w-10 h-10 mr-2 p-2 flex items-center" href="javascript:void(0)">
+              <svg class="fill-current flex-1 text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M440.65 12.57l4 82.77A247.16 247.16 0 0 0 255.83 8C134.73 8 33.91 94.92 12.29 209.82A12 12 0 0 0 24.09 224h49.05a12 12 0 0 0 11.67-9.26 175.91 175.91 0 0 1 317-56.94l-101.46-4.86a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12H500a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12h-47.37a12 12 0 0 0-11.98 12.57zM255.83 432a175.61 175.61 0 0 1-146-77.8l101.8 4.87a12 12 0 0 0 12.57-12v-47.4a12 12 0 0 0-12-12H12a12 12 0 0 0-12 12V500a12 12 0 0 0 12 12h47.35a12 12 0 0 0 12-12.6l-4.15-82.57A247.17 247.17 0 0 0 255.83 504c121.11 0 221.93-86.92 243.55-201.82a12 12 0 0 0-11.8-14.18h-49.05a12 12 0 0 0-11.67 9.26A175.86 175.86 0 0 1 255.83 432z" /></svg>
+            </a>
+          </div>
           <div class="flex flex-col mr-4 text-center">
             <label for="regular" class="text-xs leading-4 text-gray-700 font-bold uppercase">Color Interval</label> <span class="text-xs font-hairline">( max 100 )</span>
             <input id="regular" v-model="colorInterval" type="number" class="shadow w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input percentage color interval">
@@ -35,7 +43,7 @@
           </div>
         </div>
       </div>
-      <hr class="border-gray-400 mx-4">
+      <hr class="border-gray-400 mx-4 my-4 md:my-0">
       <div class="flex w-full sm:flex-row flex-wrap justify-center">
         <div v-for="(color, index) in colors" :key="index" class="px-4 w-1/2 sm:w-1/3 md:w-1/5 relative">
           <div v-if="color.warning === true" class="text-xs text-red-600 text-right absolute right-0 mr-4 -mt-4">
@@ -83,7 +91,7 @@ export default {
   data () {
     return {
       colors: [
-        { hex: '3F51B5', warning: false },
+        { hex: '6002EE', warning: false },
         { hex: '4CAF50', warning: false },
         { hex: '2196F3', warning: false },
         { hex: 'FFEB3B', warning: false },
@@ -127,9 +135,10 @@ export default {
   },
   methods: {
     updateColor (e, index) {
-      if (e.target.value.length === 6) {
+      const color = e.target.value.replace('#', '')
+      if (color.length === 6) {
         this.colors[index].warning = false
-        this.createTintsAndShades(e.target.value, index)
+        this.createTintsAndShades(color, index)
       } else {
         this.colors[index].warning = true
       }

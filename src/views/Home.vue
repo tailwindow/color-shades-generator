@@ -45,7 +45,7 @@
       </div>
       <hr class="border-gray-400 mx-4 my-4">
       <div class="flex w-full sm:flex-row flex-wrap justify-center">
-        <div v-for="(color, index) in colors" :key="'color-' + color + '-' + index + '-' + Math.random()" class="px-4 w-1/2 sm:w-1/3 md:w-1/5 relative">
+        <div v-for="(color, index) in colors" :key="'color-' + color + '-' + index" class="px-4 w-1/2 sm:w-1/3 md:w-1/5 relative">
           <div v-if="color.warning === true" class="text-xs text-red-600 text-right absolute right-0 mr-4 -mt-4">
             Fill 6 Hex Color
           </div>
@@ -66,7 +66,7 @@
           <div class="flex flex-col mb-8">
             <div
               v-for="shade in colorShades[index]"
-              :key="'shade-' + shade + '-' + Math.random()"
+              :key="'shade-' + shade + '-' + index"
               class="shadow-md focus:outline-none"
               :class="{ 'text-white' : !isLumaLight(shade) }"
               :style="{ backgroundColor: '#' + shade }"

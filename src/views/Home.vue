@@ -144,8 +144,7 @@ export default {
   },
   methods: {
     isHex (h) {
-      var a = parseInt(h, 16)
-      return (a.toString(16) === h.toLowerCase())
+      return /[0-9A-F]{6}$/i.test(h)
     },
     toggleView () {
       this.isHexVisible = !this.isHexVisible
@@ -165,6 +164,7 @@ export default {
     },
     updateHexColor (e, index) {
       const color = e.replace('#', '')
+      // color.length === 6 to ignore alpha
       if (color.length === 6 && this.isHex(color)) {
         this.colors[index].warning = false
         this.createTintsAndShades(color, index)
@@ -174,6 +174,7 @@ export default {
     },
     updateColor (e, index) {
       const color = e.target.value.replace('#', '')
+      // color.length === 6 to ignore alpha
       if (color.length === 6 && this.isHex(color)) {
         this.colors[index].warning = false
         this.createTintsAndShades(color, index)

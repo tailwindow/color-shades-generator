@@ -2,7 +2,7 @@
   <div class="flex bg-gray-300 min-h-screen justify-center">
     <div class="flex flex-col px-4 py-4 bg-gray-100 w-full justify-between max-w-screen-xl shadow-xl">
       <div class="flex flex-col sm:flex-row justify-between mx-4 my-2 items-center">
-        <div class="flex flex-col">
+        <div class="flex flex-col mr-4">
           <svg class="h-12" viewBox="0 0 3378 699" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="Tailwindow-Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="Tailwindow">
@@ -24,12 +24,12 @@
             Color shades generator
           </p>
         </div>
-        <div class="w-64 mt-8 sm:mt-0 flex">
+        <div class="mt-8 sm:mt-0 flex">
           <div class="flex flex-col mr-4 text-center">
             <label for="regular" class="text-xs leading-4 text-gray-700 font-bold uppercase">Color Interval</label> <span class="text-xs font-hairline">( max 100 )</span>
             <input id="regular" v-model="colorInterval" type="number" class="shadow w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input percentage color interval">
           </div>
-          <div class="flex flex-col mr-4 text-center">
+          <div class="flex flex-col text-center">
             <label for="regular" class="text-xs leading-4 text-gray-700 font-bold uppercase">Color Range</label> <span class="text-xs font-hairline">( 2 - 9 )</span>
             <input id="regular" v-model="colorRange" type="number" class="shadow w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input percentage color interval">
           </div>
@@ -37,8 +37,11 @@
       </div>
       <hr class="border-gray-400 mx-4">
       <div class="flex w-full sm:flex-row flex-wrap justify-center">
-        <div v-for="(color, index) in colors" :key="index" class="px-4 w-1/2 sm:w-1/3 md:w-1/5">
-          <div class="flex mt-8 mb-4">
+        <div v-for="(color, index) in colors" :key="index" class="px-4 w-1/2 sm:w-1/3 md:w-1/5 relative">
+          <div v-if="color.warning === true" class="text-xs text-red-600 text-right absolute right-0 mr-4 -mt-4">
+            Fill 6 Hex Color
+          </div>
+          <div class="flex mb-4">
             <div class="shadow-md w-8 text-center text-xs py-2 bg-gray-300">
               #
             </div>
@@ -80,19 +83,16 @@ export default {
   data () {
     return {
       colors: [
-        { hex: '3F51B5' },
-        { hex: '4CAF50' },
-        { hex: '2196F3' },
-        { hex: 'FFEB3B' },
-        { hex: 'F44336' }
+        { hex: '3F51B5', warning: false },
+        { hex: '4CAF50', warning: false },
+        { hex: '2196F3', warning: false },
+        { hex: 'FFEB3B', warning: false },
+        { hex: 'F44336', warning: false }
       ],
       colorRange: 4, // (2 - 9)
       colorInterval: 20, // percentage (max 100)
       interval: 0.20, // percentage (max 1)
-      colorShades: [],
-      beta: [{
-        hex: ''
-      }]
+      colorShades: []
     }
   },
   watch: {
@@ -128,7 +128,10 @@ export default {
   methods: {
     updateColor (e, index) {
       if (e.target.value.length === 6) {
+        this.colors[index].warning = false
         this.createTintsAndShades(e.target.value, index)
+      } else {
+        this.colors[index].warning = true
       }
     },
     isLumaLight (color) {

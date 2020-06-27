@@ -35,17 +35,17 @@
           </div>
           <div class="flex flex-col mr-4 text-center">
             <label for="regular" class="text-xs leading-4 text-gray-700 font-bold uppercase">Color Interval</label> <span class="text-xs font-hairline">( {{ colorIntervalMin }} - {{ colorIntervalMax }} )</span>
-            <input id="regular" ref="selectInterval" v-model="colorInterval" type="number" class="shadow select-all w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input color interval" @click="$refs.selectInterval.select()">
+            <input id="regular" ref="selectInterval" v-model="colorInterval" autocomplete="off" type="number" class="shadow select-all w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input color interval" @click="$refs.selectInterval.select()">
           </div>
           <div class="flex flex-col text-center">
             <label for="regular" class="text-xs leading-4 text-gray-700 font-bold uppercase">Color Range</label> <span class="text-xs font-hairline">( 2 - 9 )</span>
-            <input id="regular" ref="selectRange" v-model="colorRange" type="number" class="shadow select-all w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input color range" @click="$refs.selectRange.select()">
+            <input id="regular" ref="selectRange" v-model="colorRange" autocomplete="off" type="number" class="shadow select-all w-full mt-1 border bg-gray-200 border-gray-400 py-1 px-4 text-gray-700 text-md focus:outline-none focus:border-gray-500" placeholder="Input color range" @click="$refs.selectRange.select()">
           </div>
         </div>
       </div>
       <hr class="border-gray-400 mx-4 my-4">
       <div class="flex w-full sm:flex-row flex-wrap justify-center">
-        <div v-for="(color, index) in colors" :key="'color-' + color + '-' + index + random()" class="px-4 w-1/2 sm:w-1/3 md:w-1/5 relative">
+        <div v-for="(color, index) in colors" :key="'color-' + '-' + index" class="px-4 w-1/2 sm:w-1/3 md:w-1/5 relative">
           <div v-if="color.warning === true" class="text-xs text-red-600 text-right absolute right-0 mr-4 -mt-4">
             Fill 6 Hex Color
           </div>
@@ -54,12 +54,13 @@
               #
             </div>
             <input
-              :id="color + '-' + index"
               v-model="color.hex"
               type="text"
               class="shadow-md bg-gray-200 w-full text-sm p-2 outline-none"
+              autocomplete="off"
               name="color"
               placeholder="HEX COLOR"
+              @keyup="updateColor($event, index)"
               @change="updateColor($event, index)"
             >
           </div>
